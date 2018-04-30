@@ -9,6 +9,7 @@ knitr::opts_chunk$set(comment = "*")
 knitr::opts_chunk$set(fig.width=3)
 knitr::opts_chunk$set(fig.height=2)
 knitr::opts_chunk$set(fig.align="center")
+knitr::opts_chunk$set(warning = FALSE)
 
 library(gridExtra)
 library(grid)
@@ -39,51 +40,47 @@ ph.TeX.forca = math("N")
 ph.TeX.potencia = math("W")
 ```
 
+### Unidades
+
+Todas as medidas presentes no código R são dadas no SI (Sistema Internacional de Medidas), a menos que explicitado o contrário. Todas as medidas presentes em gráficos e tabelas estarão acompanhadas da unidade utilizada.
 
 ### Parâmetros dos experimentos
 
 ```{r}
+# Massa do carrinho com bandeira.
 p.massa = 0.2107
+
+# Tamanho da régua
 p.regua = 2
 
-# Posição inicial do fim da bandeira
+# Posição inicial do fim da bandeira em relação a origem da régua.
 p.bandeira = 0.204
 
-# Tamanho da bandeira
+# Tamanho da bandeira.
 p.tam_bandeira = 0.0975
 
-# Distância entre sensores adjacentes
+# Distância entre sensores adjacentes em cada um dos experimentos de movimento retilíneo.
 p.MRU.distancias = c(0.373, 0.322, 0.655, 0.37)
 p.MRU.posicoes = cumsum(p.MRU.distancias) - p.bandeira
-
-
 p.MUV.distancias = c(0.207 + p.bandeira, 0.414, 0.427, 0.49)
 p.MUV.posicoes = cumsum(p.MUV.distancias) - p.bandeira
-p.MUV.h = function(s = 0) { 0.012 * (p.regua - p.bandeira - s) / p.regua }
-
 p.MUV_flag.distancias = c(0.406, 0.49, 0.354, 0.495)
 p.MUV_flag.posicoes = cumsum(p.MUV.distancias) - p.bandeira
+
+# Altura do plano inclinado em função do deslocamento do carrinho em cada um dos experimentos de MUV.
+p.MUV.h = function(s = 0) { 0.012 * (p.regua - p.bandeira - s) / p.regua }
 p.MUV_flag.h = function(s = 0) { 0.005 * (p.regua - p.bandeira - s) / p.regua }
 ```
 
 
 ### Dados dos experimentos
 
-Os dados dos experimentos MU e MUV já foram carregados a partir de arquivos `.csv`.
+Os dados dos experimentos MU e MUV foram carregados a partir de arquivos `.csv` previamente construídos a partir das anotações feitas durante a aula.
 
 ```{r}
 dados.MRU = read.csv("mru.csv")
 dados.MUV = read.csv("muv.csv")
 dados.MUV_flag = read.csv("muv_flag.csv")
-```
-
-```{r, fig.height=2, echo=FALSE}
-colnames(dados.MRU) = TeX(paste(subscript("t", 1:ncol(dados.MRU)), parens(ph.TeX.tempo)))
-grid.arrange(top="Observações - MRU", tableGrob(dados.MRU, theme=tt))
-```
-```{r, fig.height=1, echo=FALSE}
-colnames(dados.MUV) = TeX(paste(subscript("t", 1:ncol(dados.MUV)), parens(ph.TeX.tempo)))
-grid.arrange(top="Observações - MUV", tableGrob(dados.MUV, theme=tt))
 ```
 ```{r, fig.height=2, echo=FALSE}
 colnames(dados.MUV_flag) = TeX(paste(subscript("t", 1:ncol(dados.MUV_flag)), parens(ph.TeX.tempo)))
@@ -91,6 +88,9 @@ grid.arrange(top="Observações - MUV (bandeira)", tableGrob(dados.MUV_flag, the
 ```
 
 ### Funções e constantes
+
+Algumas funções e constantes foram definidas com o intuito de tornar tais trechos de código reutilizáveis.
+
 ```{r}
 # Constantes comuns (physics)
 ph.G = 9.7833
@@ -111,9 +111,28 @@ MUV.deslocamento = function(a, t, v0 = 0) { t*v0 + 0.5*a*t^2 }
 MUV.aceleracao = function(s, t, v0 = 0) { 2*(s - t*v0)/t^2 }
 ```
 
-### Análises gráficas
+## Experimentos
 
-#### MRU
+### Movimento Retilíneo
+
+Os experimentos foram realizados num trilho de ar de $`r p.regua`$ metros de comprimento, onde foi colocado um carrinho de $`r round(p.massa*1000, digits=1)`$ gramas com uma bandeira centralizada de $`r round(p.tam_bandeira*100, digits=2)`$ centímetros. Tal carrinho foi colocado no ponto mais à esquerda do trilho e foi suspenso por uma fina camada de ar que tornou o atrito no sistema desprezível. Além disso, 4 sensores foram dispostos ao longo desta régua. Em cada experimento estes sensores foram usados de forma diferente, como explicado nas próximas seções.
+
+#### Movimento Retilíneo Uniforme
+
+Cada iteração do experimento consistiu no lançamento do carrinho a uma velocidade fixa, com auxílio de uma mola presente no extremo inicial do trilho. No momento do lançamento, 4 *timers* foram disparados: cada um dos timers foi associado a um dos sensores dispostos no trilho. Cada um dos timers parava quando a bandeira do carrinho adentrasse a região de detecção do sensor.
+
+O objetivo do movimento foi analisar o Movimento Retilíneo Uniforme na prática. Para isso, o trilho foi cuidadosamente ajustado de forma com que sua inclinação em relação ao chão fosse desprezível.
+
+As tabelas abaixo mostram as posições onde cada um dos 4 sensores foram colocados ao longo do trilho e, para cada iteração realizada, os tempos registrados por cada um dos sensores.
+
+```{r, fig.height=3.4, echo=FALSE}
+posicoes = t(p.MRU.posicoes)
+colnames(posicoes) = TeX(paste(subscript("s", 1:ncol(posicoes)), parens(ph.TeX.deslocamento)))
+colnames(dados.MRU) = TeX(paste(subscript("t", 1:ncol(dados.MRU)), parens(ph.TeX.tempo)))
+grid.arrange(top="Observações - MRU", tableGrob(posicoes, theme=tt), tableGrob(dados.MRU, theme=tt))
+```
+
+No gráfico abaixo é possível visualizar cada uma das observações obtidas. Além disso, é possível notar que a distribuição das observações lembra uma reta, o que condiz com a natureza do *MRU*. Mais espeficamente, uma reta que descrevesse razoavelmente bem um *MRU* a partir das observações dadas foi gerada a partir do método de regressão linear. Podemos notar que o coeficiente $\beta_1 = 0.805$ obtido indica justamente a taxa de variação do deslocamento com a variação do tempo, ou a **velocidade** do carrinho, que é constante num *MRU* perfeito.
 
 ```{r, fig.width=5, fig.height=3.5, echo=FALSE}
 rep_posicoes = rep(p.MRU.posicoes, times=nrow(dados.MRU))
@@ -123,7 +142,7 @@ reg = lm(rep_posicoes ~ x)
 x_curve = data.frame(x=seq(0.0, 2.0, length.out=30))
 predicted = predict(reg, x_curve, interval="confidence")
 reg_curve = polynomial(coef(reg))
-curve_text = paste("Curva:", polys(round(reg_curve, digits=3), "t"))
+curve_text = paste("Deslocamento:", polys(round(reg_curve, digits=3), "t"))
 
 grid.arrange(
   top="Deslocamento x Tempo",
@@ -139,6 +158,8 @@ grid.arrange(
   )
 ```
 
+Podemos ainda obter a *velocidade média* ($\Delta s / \Delta t$) no trajeto entre a origem do trilho e cada um dos sensores e obter uma reta através do mesmo método de regressão linear que nos mostre que, de fato, a velocidade do carrinho se mostra praticamente constante durante as iterações do experimento. Note que o coeficiente $\beta_1 = 0.061$ é razoavelmente pequeno, mostrando que há poquíssima variação na *velocidade média* do carrinho durante o trajeto.
+
 ```{r, fig.width=9, fig.height=3.5, echo=FALSE}
 velocidades = t(MRU.velocidade(p.MRU.posicoes, t(dados.MRU)))
 colnames(velocidades) = TeX(paste(subscript("v", 1:ncol(dados.MRU)), parens(ph.TeX.velocidade)))
@@ -147,7 +168,7 @@ y = flatten_by_rows(velocidades)
 x = flatten_by_rows(dados.MRU)
 reg = lm(y ~ x)
 reg_curve = polynomial(coef(reg))
-curve_text = paste("Curva:", polys(round(reg_curve, digits=3), "t"))
+curve_text = paste("Velocidade:", polys(round(reg_curve, digits=3), "t"))
 
 x_curve = data.frame(x=seq(0.0, 2.0, length.out=20))
 predicted = predict(reg, x_curve, interval="confidence") 
@@ -168,7 +189,20 @@ grid.arrange(
   )
 ```
 
-#### MUV
+#### Movimento Uniformemente Variado
+
+O trilho de ar foi levemente inclinado com ajuda de uma pastilha, fazendo com que o trilho se tornasse um plano inclinado de $`r p.regua`$ metros de comprimento e $`r round(p.MUV.h(-p.bandeira)*100, digits=2)`$ centímetros de altura (em relação à origem da régua). Na única iteração deste experimento, o carrinho foi solto, a partir do repouso, do começo da régua e os tempos foram medidos de forma semelhante ao *MRU*.
+
+O objetivo do experimento foi analisar o *Movimento Uniformemente Variado* na prática.
+
+As tabelas abaixo mostram as posições onde cada um dos 4 sensores foram colocados ao longo do trilho e os tempos registrados por cada um dos sensores.
+
+```{r, fig.height=2, echo=FALSE}
+posicoes = t(p.MUV.posicoes)
+colnames(posicoes) = TeX(paste(subscript("s", 1:ncol(posicoes)), parens(ph.TeX.deslocamento)))
+colnames(dados.MUV) = TeX(paste(subscript("t", 1:ncol(dados.MUV)), parens(ph.TeX.tempo)))
+grid.arrange(top="Observações - MUV", tableGrob(posicoes, theme=tt), tableGrob(dados.MUV, theme=tt))
+```
 
 ```{r, fig.width=6, fig.height=3.5, echo=FALSE}
 # Analise de deslocamento

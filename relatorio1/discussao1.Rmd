@@ -1,0 +1,16 @@
+---
+title: "Física - Discussão Projeto I"
+output: html_document
+---
+
+```{r child="common.Rmd"}
+```
+```{r child="intro.Rmd"}
+```
+
+## Experimentos
+
+```{r child="mu.Rmd"}
+```
+```{r child="pendulo.Rmd"}
+```

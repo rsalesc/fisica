@@ -13,4 +13,5 @@ output: html_document
 ```{r child="mu.Rmd"}
 ```
 ```{r child="pendulo.Rmd"}
-```
+```+
+  

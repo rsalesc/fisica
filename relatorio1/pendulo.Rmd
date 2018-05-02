@@ -2,5 +2,18 @@
 
 O sistema pêndulo consistia num suporte elevado a $`r p.altura_pino`$ metros no qual era amarrado um barbante de tamanho variável e em cuja extremidade pendia uma bola de metal de $`r round(p.diametro_bola*100, digits=1)`$ centímetros de diâmetro. Cada medição consistia em abandonar a bolinha, com um ângulo de abertura de 5º, e avaliar quanto tempo demorava para que completasse 3 idas e voltas. O experimento como um todo consistia em variar o tamanho do barbante entre as medições, para analisar como sua extensão está correlacionada com o período do sistema pêndulo.
 
-A tabela abaixo mostra os tempos medidos, para diferentes alturas entre a bola e o chão:
+A tabela abaixo mostra os tempos medidos, para diferentes comprimentos de corda. Para cada comprimento de corda distinto foram feitas três repetições do experimento. A última coluna da tabela contém a média das três observações feitas, valor que será usado durante o resto da análise:
 
+```{r, fig.height=4, echo=FALSE}
+
+dados.pendulo[,"h0"] = p.altura_pino - p.diametro_bola - dados.pendulo[,"h0"]
+dados.pendulo = cbind(dados.pendulo, rowMeans(dados.pendulo[,2:4]))
+colnames(dados.pendulo) = TeX(
+  c(
+    paste("L", parens(ph.TeX.deslocamento)),
+    paste(subscript("t", 1:(ncol(dados.pendulo)-2)), parens(ph.TeX.tempo)),
+    paste(subscript("t", "m"), parens(ph.TeX.tempo))
+  )
+)
+grid.arrange(top="Observações - Pêndulo", tableGrob(round(dados.pendulo, digits=2), theme=tt))
+```

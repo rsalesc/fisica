@@ -34,7 +34,7 @@ grid.arrange(
   ggplot(mapping=aes(x=x)) 
     + geom_point(aes(y=rep_posicoes))
     + geom_line(aes(x=x_curve, y=predicted[,"fit"]))
-    + geom_ribbon(aes(x=x_curve, ymin=predicted[,"lwr"], ymax=predicted[,"upr"]), alpha=0.15)
+    # + geom_ribbon(aes(x=x_curve, ymin=predicted[,"lwr"], ymax=predicted[,"upr"]), alpha=0.15)
     + geom_text(aes(x=0.1, y=1.8, label=curve_text, hjust=0.0, vjust=0), parse=TRUE)
     + ylab(TeX(paste("Deslocamento", parens(ph.TeX.deslocamento))))
     + xlab(TeX(paste("Tempo", parens(ph.TeX.tempo))))
@@ -55,7 +55,7 @@ reg = lm(y ~ x)
 reg_curve = polynomial(coef(reg))
 curve_text = paste("Velocidade:", polys(round(reg_curve, digits=3), "t"))
 
-x_curve = data.frame(x=seq(0.0, 2.0, length.out=20))
+x_curve = data.frame(x=seq(0.0, 2.0, length.out=30))
 predicted = predict(reg, x_curve, interval="confidence") 
 
 grid.arrange(

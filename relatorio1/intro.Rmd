@@ -28,17 +28,28 @@ p.MUV_flag.posicoes = cumsum(p.MUV.distancias) - p.bandeira
 # Altura do plano inclinado em função do deslocamento do carrinho em cada um dos experimentos de MUV.
 p.MUV.h = function(s = 0) { 0.012 * (p.regua - p.bandeira - s) / p.regua }
 p.MUV_flag.h = function(s = 0) { 0.005 * (p.regua - p.bandeira - s) / p.regua }
+
+#Massa e diâmetro da bolinha do pêndulo
+p.massa_bola = 0.0676
+p.diametro_bola = 0.025
+
+#Distância entre o pino do pêndulo e o chão
+p.altura_pino = 1.142
+
+#Ângulo em que a bolinha era abandonada
+p.angulo_pendulo = deg2rad(5)
 ```
 
 
 ### Dados dos experimentos
 
-Os dados dos experimentos MU e MUV foram carregados a partir de arquivos `.csv` previamente construídos a partir das anotações feitas durante a aula.
+Os dados dos experimentos foram carregados a partir de arquivos `.csv` previamente construídos a partir das anotações feitas durante a aula.
 
 ```{r}
 dados.MRU = read.csv("mru.csv")
 dados.MUV = read.csv("muv.csv")
 dados.MUV_flag = read.csv("muv_flag.csv")
+dados.pendulo = read.csv("pendulo.csv")
 ```
 ```{r, fig.height=2, echo=FALSE}
 colnames(dados.MUV_flag) = TeX(paste(subscript("t", 1:ncol(dados.MUV_flag)), parens(ph.TeX.tempo)))
@@ -67,4 +78,7 @@ MRU.deslocamento = function(v, t) { v*t }
 MUV.velocidade = function(a, t, v0 = 0) { v0 + a*t }
 MUV.deslocamento = function(a, t, v0 = 0) { t*v0 + 0.5*a*t^2 }
 MUV.aceleracao = function(s, t, v0 = 0) { 2*(s - t*v0)/t^2 }
+
+# Funções Pêndulo
+pend.periodo = function(L, g = ph.G){2*pi*sqrt(L/g)}
 ```

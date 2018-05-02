@@ -1,0 +1,6 @@
+### Pêndulo
+
+O sistema pêndulo consistia num suporte elevado a $`r p.altura_pino`$ metros no qual era amarrado um barbante de tamanho variável e em cuja extremidade pendia uma bola de metal de $`r round(p.diametro_bola*100, digits=1)`$ centímetros de diâmetro. Cada medição consistia em abandonar a bolinha, com um ângulo de abertura de 5º, e avaliar quanto tempo demorava para que completasse 3 idas e voltas. O experimento como um todo consistia em variar o tamanho do barbante entre as medições, para analisar como sua extensão está correlacionada com o período do sistema pêndulo.
+
+A tabela abaixo mostra os tempos medidos, para diferentes alturas entre a bola e o chão:
+

@@ -51,10 +51,6 @@ dados.MUV = read.csv("muv.csv")
 dados.MUV_flag = read.csv("muv_flag.csv")
 dados.pendulo = read.csv("pendulo.csv")
 ```
-```{r, fig.height=2, echo=FALSE}
-colnames(dados.MUV_flag) = TeX(paste(subscript("t", 1:ncol(dados.MUV_flag)), parens(ph.TeX.tempo)))
-grid.arrange(top="Observações - MUV (bandeira)", tableGrob(dados.MUV_flag, theme=tt))
-```
 
 ### Funções e constantes
 
@@ -84,13 +80,13 @@ pend.periodo = function(L, g = ph.G){2*pi*sqrt(L/g)}
 pend.velocidade_angular = function(L, g = ph.G) { 2*pi/pend.periodo(L, g) }
 pend.velocidade = function(L, ang, t = 0, g = ph.G) {
   w = pend.velocidade_angular(L, g)
-  return(w * ang * sin(w*t))
+  return(w * ang * sin(w*t) * L)
 }
 pend.aceleracao = function(L, ang, t = 0, g = ph.G) {
   w = pend.velocidade_angular(L, g)
-  return(-w^2 * ang * cos(w*t))
+  return(-w^2 * ang * cos(w*t) * L)
 }
-pend.posicao = function(L, ang, t = 0, g = ph.G) { ang*L*cos(pend.velocidade_angular(L, g)*t) }
+pend.posicao = function(L, ang, t = 0, g = ph.G) { L*ang*cos(pend.velocidade_angular(L, g)*t) }
 pend.altura = function(L, ang, t = 0, g = ph.G) {
   w = pend.velocidade_angular(L, g)
   theta = ang*cos(w*t)

@@ -190,3 +190,41 @@ grid.arrange(top="Energia x Tempo",
     + scale_colour_manual("", values=c("Cinética"="black", "Potencial"="red"))
    )
 ```
+
+#### Movimento Uniformemente Variado (bandeira)
+
+```{r, fig.height=2, echo=FALSE}
+colnames(dados.MUV_flag) = TeX(paste(subscript("t", 1:ncol(dados.MUV_flag)), parens(ph.TeX.tempo)))
+grid.arrange(top="Observações - MUV (bandeira)", tableGrob(dados.MUV_flag, theme=tt))
+```
+
+```{r, fig.width=5.5, fig.height=1, echo=FALSE}
+
+velocidades = colMeans(MRU.velocidade(p.tam_bandeira, dados.MUV_flag))
+velocidade_table = t(velocidades)
+colnames(velocidade_table) = TeX(paste(subscript("v", 1:ncol(velocidade_table)), parens(ph.TeX.velocidade)))
+
+grid.arrange(
+  tableGrob(round(velocidade_table, digits=3), theme=tt))
+```
+
+
+```{r, fig.width=5.5, fig.height=3.5, echo=FALSE}
+y_points = flatten_by_rows(MRU.velocidade(p.tam_bandeira, dados.MUV_flag))
+
+line = polynomial(c(0.0, velocidades[1]))
+x = seq(0.0, 4.0, length.out=60)
+y = as.function(line)(x)
+x_points = y_points / velocidades[1]
+
+grid.arrange(
+  top="Velocidade x Tempo",
+  ggplot(mapping=aes(x=x)) 
+    + geom_line(aes(y=y))
+    + geom_point(aes(x=x_points, y=y_points))
+    + ylab(TeX(paste("Velocidade", parens(ph.TeX.velocidade))))
+    + xlab(TeX(paste("Tempo", parens(ph.TeX.tempo))))
+    + xlim(c(0.0, 4.0))
+    + ylim(c(0.0, 0.5))
+  )
+```

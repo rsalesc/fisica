@@ -82,5 +82,18 @@ MUV.aceleracao = function(s, t, v0 = 0) { 2*(s - t*v0)/t^2 }
 # Funções Pêndulo
 pend.periodo = function(L, g = ph.G){2*pi*sqrt(L/g)}
 pend.velocidade_angular = function(L, g = ph.G) { 2*pi/pend.periodo(L, g) }
+pend.velocidade = function(L, ang, t = 0, g = ph.G) {
+  w = pend.velocidade_angular(L, g)
+  return(w * ang * sin(w*t))
+}
+pend.aceleracao = function(L, ang, t = 0, g = ph.G) {
+  w = pend.velocidade_angular(L, g)
+  return(-w^2 * ang * cos(w*t))
+}
 pend.posicao = function(L, ang, t = 0, g = ph.G) { ang*L*cos(pend.velocidade_angular(L, g)*t) }
+pend.altura = function(L, ang, t = 0, g = ph.G) {
+  w = pend.velocidade_angular(L, g)
+  theta = ang*cos(w*t)
+  return(L*(1 - cos(theta)))
+}
 ```

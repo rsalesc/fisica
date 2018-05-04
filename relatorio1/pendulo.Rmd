@@ -58,17 +58,68 @@ grid.arrange(
 ```
 
 ```{r, fig.width=5, fig.height=3.5, echo=FALSE}
-# Lm = dados.pendulo[1,1]
-# x = seq(0.0, 12.0, length.out=90)
-# y = pend.posicao(Lm, p.angulo_pendulo, x)
-# 
-# grid.arrange(
-#   top="Posição x Tempo",
-#   ggplot(mapping=aes(x=x, y=y))
-#     + geom_line()
-#     + ylab(TeX(paste("Posição", parens(ph.TeX.deslocamento))))
-#     + xlab(TeX(paste("Tempo", parens(ph.TeX.tempo))))
-#     + xlim(c(0.0, 12))
-#     + ylim(c(-0.13, 0.13))
-#   )
+Lm = dados.pendulo[1,1]
+x = seq(0.0, 6, length.out=180)
+y = pend.posicao(Lm, p.angulo_pendulo, x)
+
+grid.arrange(
+  top="Posição x Tempo",
+  ggplot(mapping=aes(x=x, y=y))
+    + geom_line()
+    + ylab(TeX(paste("Posição", parens(ph.TeX.deslocamento))))
+    + xlab(TeX(paste("Tempo", parens(ph.TeX.tempo))))
+    + xlim(c(0.0, 6))
+    + ylim(c(-0.13, 0.13))
+  )
+```
+
+```{r, fig.width=5, fig.height=3.5, echo=FALSE}
+Lm = dados.pendulo[1,1]
+x = seq(0.0, 6, length.out=180)
+y = pend.velocidade(Lm, p.angulo_pendulo, x)
+
+grid.arrange(
+  top="Velocidade x Tempo",
+  ggplot(mapping=aes(x=x, y=y))
+    + geom_line()
+    + ylab(TeX(paste("Velocidade", parens(ph.TeX.velocidade))))
+    + xlab(TeX(paste("Tempo", parens(ph.TeX.tempo))))
+    + xlim(c(0.0, 6))
+    + ylim(c(-0.5, 0.5))
+  )
+```
+
+```{r, fig.width=5, fig.height=3.5, echo=FALSE}
+Lm = dados.pendulo[1,1]
+x = seq(0.0, 6, length.out=180)
+y = pend.aceleracao(Lm, p.angulo_pendulo, x)
+
+grid.arrange(
+  top="Aceleração x Tempo",
+  ggplot(mapping=aes(x=x, y=y))
+    + geom_line()
+    + ylab(TeX(paste("Aceleração", parens(ph.TeX.aceleracao))))
+    + xlab(TeX(paste("Tempo", parens(ph.TeX.tempo))))
+    + xlim(c(0.0, 6))
+    + ylim(c(-1.0, 1.0))
+  )
+```
+
+```{r, fig.width=7, fig.height=5, echo=FALSE}
+Lm = dados.pendulo[1,1]
+x = seq(0.0, 4, length.out=180)
+y = ph.e.cinetica(pend.velocidade(Lm, p.angulo_pendulo, x), p.massa_bola)
+pot_y = ph.e.potencial(p.massa_bola, pend.altura(Lm, p.angulo_pendulo, x))
+
+grid.arrange(
+  top="Energia x Tempo",
+  ggplot(mapping=aes(x=x, y=y))
+    + geom_line(aes(colour="Cinética"))
+    + geom_line(aes(x=x, y=pot_y, colour="Potencial"))
+    + ylab(TeX(paste("Energia", parens(ph.TeX.energia))))
+    + xlab(TeX(paste("Tempo", parens(ph.TeX.tempo))))
+    + xlim(c(0.0, 4))
+    + ylim(c(-0.0005, 0.003))
+    + scale_colour_manual("", values=c("Cinética"="black", "Potencial"="red"))
+  )
 ```

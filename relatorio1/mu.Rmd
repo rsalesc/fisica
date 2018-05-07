@@ -1,8 +1,8 @@
-### Movimento Retilíneo
+## Movimento Retilíneo
 
 Os experimentos foram realizados num trilho de ar de $`r p.regua`$ metros de comprimento, onde foi colocado um carrinho de $`r round(p.massa*1000, digits=1)`$ gramas com uma bandeira centralizada de $`r round(p.tam_bandeira*100, digits=2)`$ centímetros. Tal carrinho foi colocado no ponto mais à esquerda do trilho e foi suspenso por uma fina camada de ar que tornou o atrito no sistema desprezível. Além disso, 4 sensores foram dispostos ao longo desta régua. Em cada experimento estes sensores foram usados de forma diferente, como explicado nas próximas seções.
 
-#### Movimento Retilíneo Uniforme
+### Movimento Retilíneo Uniforme
 
 Cada iteração do experimento consistiu no lançamento do carrinho a uma velocidade fixa, com auxílio de uma mola presente no extremo inicial do trilho. No momento do lançamento, 4 *timers* foram disparados: cada um dos timers foi associado a um dos sensores dispostos no trilho. Cada um dos timers parava quando a bandeira do carrinho adentrasse a região de detecção do sensor.
 
@@ -74,7 +74,7 @@ grid.arrange(
   )
 ```
 
-#### Movimento Uniformemente Variado
+### Movimento Uniformemente Variado
 
 O trilho de ar foi levemente inclinado com ajuda de uma pastilha, fazendo com que o trilho se tornasse um plano inclinado de $`r p.regua`$ metros de comprimento e $`r round(p.MUV.h(-p.bandeira)*100, digits=2)`$ centímetros de altura (em relação à origem da régua). Na única iteração deste experimento, o carrinho foi solto, a partir do repouso, do começo da régua e os tempos foram medidos de forma semelhante ao *MRU*.
 
@@ -88,6 +88,9 @@ colnames(posicoes) = TeX(paste(subscript("s", 1:ncol(posicoes)), parens(ph.TeX.d
 colnames(dados.MUV) = TeX(paste(subscript("t", 1:ncol(dados.MUV)), parens(ph.TeX.tempo)))
 grid.arrange(top="Observações - MUV", tableGrob(posicoes, theme=tt), tableGrob(dados.MUV, theme=tt))
 ```
+
+Podemos observar uma função quadrática no deslocamento do carrinho em relação ao tempo, que resultou
+		na função y = 0.032t², indicando maior deslocamento no decorrer do experimento.
 
 ```{r, fig.width=6, fig.height=3.5, echo=FALSE}
 # Analise de deslocamento
@@ -119,6 +122,9 @@ grid.arrange(
   )
 ```
 
+Podemos observar uma função de comportamento linear na função da velocidade do carrinho em relação ao tempo da forma
+		y = 0.064t com um angelo "theta" de 3.69°.
+		
 ```{r, fig.width=6, fig.height=3.5, echo=FALSE}
 # Analise de velocidade, derivada
 velocidade_line = deriv(curve)
@@ -151,7 +157,12 @@ grid.arrange(
   )
 ```
 
-
+Podemos observar a sobreposição dos gráficos de energia cinética e energia potencial, a função quadrática da energia
+		cinética é representada pela função y = 0.000437t² e a função quadrática da energia potencial é representada por
+		y = 0.022213 - 0.000398t². Os gráficos representam um sistema com maior quantidade de energia potencial que realiza trocas
+		de energia, transformando-a em cinética. Consideramos o sistema como sendo conservativo, ou seja, energia cinética somada com
+		a energia potencial resulta na energia mecânica do sistema.
+		
 ```{r, fig.width=7, fig.height=4, echo=FALSE}
 deslocamento_curve = curve
 # Analise de energia cinetica
@@ -191,7 +202,12 @@ grid.arrange(top="Energia x Tempo",
    )
 ```
 
-#### Movimento Uniformemente Variado (bandeira)
+### Movimento Uniformemente Variado (bandeira)
+
+Este gráfico foi plotado segundo o experimento da bandeira, em que setamos os tempos em que a bandeira
+		permanecia dentro de casa sensor e computamos a sua velocidade diante do deslocamento no trilho de ar.
+		Adotamos uma escala de tempo adequada aos resultados do experimento e plotamos a linearidade do comportamento,
+		ajustando pontos sobre a configuração da função.
 
 ```{r, fig.height=2, echo=FALSE}
 colnames(dados.MUV_flag) = TeX(paste(subscript("t", 1:ncol(dados.MUV_flag)), parens(ph.TeX.tempo)))

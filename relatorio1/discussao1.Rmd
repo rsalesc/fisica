@@ -1,14 +1,24 @@
 ---
-title: "Física - Discussão Projeto I"
-output: html_document
+fontsize: 12pt
+output:
+  pdf_document: 
+    highlight: zenburn
+    includes:
+      before_body: latex/doc_prefix.tex
+      in_header: latex/header.tex
+    keep_tex: yes
+    number_sections: yes
+  html_document: default
 ---
+
+# Introdução
 
 ```{r child="common.Rmd"}
 ```
 ```{r child="intro.Rmd"}
 ```
 
-## Experimentos
+# Experimentos
 
 ```{r child="mu.Rmd"}
 ```

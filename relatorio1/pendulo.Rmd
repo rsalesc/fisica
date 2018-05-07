@@ -1,4 +1,4 @@
-### Pêndulo
+## Pêndulo
 
 O sistema pêndulo consistia num suporte elevado a $`r p.altura_pino`$ metros no qual era amarrado um barbante de tamanho variável e em cuja extremidade pendia uma bola de metal de $`r round(p.diametro_bola*100, digits=1)`$ centímetros de diâmetro. Cada medição consistia em abandonar a bolinha, com um ângulo de abertura de 5º, e avaliar quanto tempo demorava para que completasse 5 idas e voltas. O experimento como um todo consistia em variar o tamanho do barbante entre as medições, para analisar como sua extensão está correlacionada com o período do sistema pêndulo.
 
@@ -19,6 +19,10 @@ colnames(dados.pendulo) = TeX(
 grid.arrange(top="Observações - Pêndulo", tableGrob(round(dados.pendulo, digits=2), theme=tt))
 ```
 
+Utilizamos nessa plotagem os tempos registrados na tabela e o comprimento do barbante durante a oscilação.
+		Podemos observar o comportamento de uma função raiz, em que o periodo aumenta de acordo com o comprimento do barbante
+		no pêndulo, este período foi calculado como : T = 2.pi.raiz(L/G).
+		
 ```{r, fig.width=5, fig.height=3.5, echo=FALSE}
 x = dados.pendulo[,1]
 y = dados.pendulo[,ncol(dados.pendulo)]
@@ -34,6 +38,9 @@ grid.arrange(
   )
 ```
 
+Plotamos juntamente com o gráfico anterior a função do período quadrático que possui comportamento linear em relação ao tempo da forma:
+	y = 0.007 + 3.926L.
+	
 ```{r, fig.width=5, fig.height=3.5, echo=FALSE}
 x = dados.pendulo[,1]
 y = dados.pendulo[,ncol(dados.pendulo)]^2
@@ -57,6 +64,8 @@ grid.arrange(
   )
 ```
 
+Utilizamos a posição no tempo para plotar a função que possui o comportamento de uma senoide, variando entre -0.10 e 0.10.
+
 ```{r, fig.width=5, fig.height=3.5, echo=FALSE}
 Lm = dados.pendulo[1,1]
 x = seq(0.0, 6, length.out=180)
@@ -73,6 +82,9 @@ grid.arrange(
   )
 ```
 
+Utilizamos a velocidade no tempo para plotar a função que possui novamente o comportamento de uma senoide, variando entre
+	-0.28 e 0.28 aproximadamente.
+	
 ```{r, fig.width=5, fig.height=3.5, echo=FALSE}
 Lm = dados.pendulo[1,1]
 x = seq(0.0, 6, length.out=180)
@@ -89,6 +101,9 @@ grid.arrange(
   )
 ```
 
+Utilizamos a aceleração do carrinho no tempo para plotar a função que possui comportamento de uma cossenoide, variando entre 
+	-0.8 e 0.8.
+
 ```{r, fig.width=5, fig.height=3.5, echo=FALSE}
 Lm = dados.pendulo[1,1]
 x = seq(0.0, 6, length.out=180)
@@ -104,6 +119,8 @@ grid.arrange(
     + ylim(c(-1.0, 1.0))
   )
 ```
+
+Podemos observar o fenômeno da troca entre energia cinética e energia potencial através da sobreposição dos gráficos, incialmente o sistema com alta energia potencial e ganho de energia cinética, lembrando que o sistema é considerado conservativo e a energia mecânica é resultado da energia cinética somada com a energia potencial, sistema variando entre 0.000 e 0.0025.
 
 ```{r, fig.width=7, fig.height=5, echo=FALSE}
 Lm = dados.pendulo[1,1]

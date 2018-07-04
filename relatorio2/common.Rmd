@@ -1,0 +1,36 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(comment = "*")
+knitr::opts_chunk$set(fig.width=3)
+knitr::opts_chunk$set(fig.height=2)
+knitr::opts_chunk$set(fig.align="center")
+knitr::opts_chunk$set(warning = FALSE)
+
+library(gridExtra)
+library(grid)
+library(latex2exp)
+library(ggplot2)
+library(polynom)
+```
+
+```{r include=FALSE}
+# Setup tableGrob theme with text parsing
+tt <- ttheme_default(colhead=list(fg_params = list(parse=TRUE)))
+
+math = function(s) { paste0("$", s, "$") }
+parens = function(s) { paste0("(", s, ")") }
+subscript = function(s, v) { math(paste0(s, "_{", v, "}")) }
+flatten_by_rows = function(m) { c(t(m)) }
+rad2deg <- function(rad) {(rad * 180) / (pi)}
+deg2rad <- function(deg) {(deg * pi) / (180)}
+polys <- function(p, s) { gsub("x", s, as.character(p)) }
+
+ph.TeX.energia = math("J")
+ph.TeX.deslocamento = math("m")
+ph.TeX.velocidade = math("m/s")
+ph.TeX.tempo = math("s")
+ph.TeX.aceleracao = math("m/s^2")
+ph.TeX.massa = math("kg")
+ph.TeX.forca = math("N")
+ph.TeX.potencia = math("W")
+```

@@ -1,0 +1,8 @@
+discussao1_files
+discussao1.synctex.gz
+*.tex
+*.log
+*.toc
+*.pdf
+.Rhistory
+

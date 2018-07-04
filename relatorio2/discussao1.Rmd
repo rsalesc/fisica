@@ -20,8 +20,5 @@ output:
 
 # Experimentos
 
-```{r child="mu.Rmd"}
+```{r child="corrente.Rmd"}
 ```
-```{r child="pendulo.Rmd"}
-```
-  

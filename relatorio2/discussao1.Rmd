@@ -12,6 +12,10 @@ output:
   #html_document: default
 ---
 
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.pos = 'h')
+```
+
 # Introdução
 
 ```{r child="common.Rmd"}

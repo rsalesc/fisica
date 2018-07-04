@@ -33,4 +33,7 @@ ph.TeX.aceleracao = math("m/s^2")
 ph.TeX.massa = math("kg")
 ph.TeX.forca = math("N")
 ph.TeX.potencia = math("W")
+ph.TeX.tensao = math("V")
+ph.TeX.corrente = math("A")
+ph.TeX.resistencia = math("\\Omega")
 ```

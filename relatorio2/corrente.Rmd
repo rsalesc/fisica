@@ -126,3 +126,9 @@ knitr::include_graphics("imgs/cap.jpg")
 ```{r echo=FALSE, fig.cap="Com fonte eletromotriz do Arduino", out.width = "30%"}
 knitr::include_graphics("imgs/capfoto.jpg")
 ```
+
+## Gráfico
+
+Podemos observar a proximidade das curvas desenhadas aos gráficos das funções
+$\epsilon (1 - e^{-t/{rc}})$ (carga) e $\epsilon e^{-t/{rc}})$ (descarga). Quando a função de carga alcança aproximadamente $0.67 \times
+\epsilon$. 

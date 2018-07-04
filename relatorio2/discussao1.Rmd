@@ -1,14 +1,15 @@
 ---
 fontsize: 12pt
 output:
-  html_document: default
   pdf_document: 
     highlight: zenburn
+    latex_engine: xelatex
     includes:
       before_body: latex/doc_prefix.tex
-      in_header: latex/header.tex
+      before_header: latex/header.tex
     keep_tex: yes
     number_sections: yes
+  #html_document: default
 ---
 
 # Introdução

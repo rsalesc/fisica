@@ -1,7 +1,6 @@
 ---
 fontsize: 12pt
 output:
-  html_document: default
   pdf_document: 
     highlight: zenburn
     includes:
@@ -9,6 +8,7 @@ output:
       in_header: latex/header.tex
     keep_tex: yes
     number_sections: yes
+  html_document: default
 ---
 
 # Introdução

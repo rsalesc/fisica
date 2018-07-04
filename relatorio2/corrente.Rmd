@@ -12,7 +12,7 @@ knitr::include_graphics("imgs/simple.jpg")
 
 ### Código utilizado
 
-```{cpp eval=FALSE}
+```{Rcpp eval=FALSE}
 #include <LiquidCrystal.h>
 using namespace std;
 
@@ -54,7 +54,7 @@ knitr::include_graphics("imgs/unk.jpg")
 
 ### Código utilizado
 
-```{cpp eval=FALSE}
+```{Rcpp eval=FALSE}
 #include <LiquidCrystal.h>
 using namespace std;
 

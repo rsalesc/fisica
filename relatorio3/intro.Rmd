@@ -1,0 +1,3 @@
+Este relatório objetiva apresentar e discutir os resultados obtidos em sessões de experimentos realizadas na Universidade Federal da Bahia. Os experimentos foram todos conduzidos com auxílio de uma placa Arduino Mega, que foi programada para fazer medições de corrente e de tensão em circuitos.
+
+Os dados obtidos foram organizados e tratados utilizando o ambiente de programação "R". Todas as medidas presentes nos códigos R são dadas no SI (Sistema Internacional de Medidas), a menos que explicitado o contrário. Todas as medidas presentes em gráficos e tabelas estarão acompanhadas da unidade utilizada.
